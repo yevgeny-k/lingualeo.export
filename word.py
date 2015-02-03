@@ -16,8 +16,8 @@ class Base(object):
 
 class Kindle(Base):
     def read(self):
-        conn = sqlite3.connect(self.source)
-        for row in conn.execute('SELECT word FROM WORDS;'):
+        conn = sqlite3.connect(self.source['path'])
+        for row in conn.execute('SELECT word FROM WORDS WHERE lang == "%s";' % self.source['lang']):
             if isinstance(row[0], unicode):
                 self.data.append(row[0])
         conn.close()
